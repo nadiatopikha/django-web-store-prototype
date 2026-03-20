@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+    {% if selected_category %}
+        <h2>Категорія: {{ selected_category.name }}</h2>
+    {% endif %}
+    {% for product in products %}
+    <div class="product-block">
+        <a href="{% url 'product_detail' product.id %}">
+            <img class="product-block img" src="{{ product.image.url }}" alt="{{ product.name }}">
+            <h2 class="product-title">{{ product.name }}</h2>
+        </a>
+        <p>Ціна: {{ product.price }} {{ product.currency }}</p>
+    </div>
+    {% endfor %}
+{% endblock %}
+
+

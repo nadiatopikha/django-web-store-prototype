@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <h1>Мій профіль</h1>
+
+  <h2>Інформація про користувача</h2>
+  <p>Ім'я: {{ user_info.first_name }}</p>
+  <p>Прізвище: {{ user_info.last_name }}</p>
+  <p>Email: {{ user_info.email }}</p>
+  
+  <h2>Редагування профілю</h2>
+  <form method="post" action="{% url 'profile' %}">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Зберегти зміни</button>
+  </form>
+
+  <h2>Історія замовлень</h2>
+  {% if orders %}
+  <ul>
+    {% for order in orders %}
+      <li>
+        Замовлення від {{ order.created_at }}
+        <ul>
+          {% for item in order.orderitem_set.all %}
+            <li>
+              {{ item.product.name }} - Кількість: {{ item.quantity }} - Сума: ${{ item.total_price }}
+            </li>
+          {% endfor %}
+        </ul>
+      </li>
+    {% endfor %}
+  </ul>
+  {% else %}
+  <p>Немає історії замовлень.</p>
+  {% endif %}
+{% endblock %}

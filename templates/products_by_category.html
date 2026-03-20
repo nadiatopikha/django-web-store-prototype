@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h1>Products in {{ category.name }}</h1>
+
+    {% if products %}
+        <ul>
+            {% for product in products %}
+                <li>
+                    <h2>{{ product.name }}</h2>
+                    <p>{{ product.description }}</p>
+                    <p>Price: {{ product.price }}</p>
+                    <!-- Додайте інші відомості про продукт, які вам потрібні -->
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No products in this category.</p>
+    {% endif %}
+{% endblock %}

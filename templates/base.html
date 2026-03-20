@@ -1,0 +1,71 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{{ title }}</title>
+    <link type="text/css" href="{% static 'css/styles.css' %}" rel="stylesheet" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link rel="icon" href="{% static 'images/favicon.png' %}" type="image/x-icon">
+    {% block head %}
+    {% endblock %}
+</head>
+<body>
+    <table class="table-page" border="0" cellpadding="0" cellspacing="0">
+        <tr>
+            <td valign="top">
+                <div class="header">
+                    <ul id="mainmenu" class="mainmenu navbar">
+                        <li class="logo"><a href="#"><div class="logo"></div></a></li>
+                        <li class="site-name"><a href="#">Здорова Полиця</a></li>
+                        <li class="search-bar">
+                            <form action="{% url 'search_results' %}" method="get">
+                                <input class="search-input" type="text" name="q" placeholder="Пошук...">
+                                <button class="search-button" type="submit">Пошук</button>
+                            </form>
+                        </li>
+                        <!--<li><a href="{% url 'upload_image' %}">Каталог товарів</a></li>-->
+                        <li><a href="{% url 'about' %}">Про нас</a></li>
+                        
+                        {% if user.is_authenticated %}
+                        <li class="last"><a href="{% url 'logout' %}">Вихід</a></li>
+                            <li class="last"><a href="{% url 'cart' %}"><img src="{% static 'images/shopping_cart.png' %}"></a></li>
+                            <li class="last"><a href="{% url 'profile' %}">Мій профіль</a></li>
+                        {% else %}
+                            <li class="last"><a href="{% url 'signup' %}">Реєстрація</a></li>
+                            <li class="last"><a href="{% url 'login' %}">Вхід</a></li>
+                        {% endif %}
+                        <li class="last">
+                        </li>
+                    </ul>
+                    <div class="clear"></div>
+                </div>
+                <table class="table-content" border="0" cellpadding="0" cellspacing="0">
+                    <tr>
+                        <td valign="top" class="left-chapters"> 
+                            <ul>
+                                <li {% if request.path == '/' %}class="selected"{% endif %}>
+                                    <a href="{% url 'home' %}">Головна сторінка</a>
+                                </li>
+                                {% for category in categories %}
+                                    <li {% if category == selected_category %}class="selected"{% endif %}>
+                                        <a href="{% url 'home_with_category' category_name=category.name %}">{{ category.name }}</a>
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                        </td>       
+                        <td valign="top" class="content">
+                            {% block content %}
+                            {% endblock %}
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+    <footer>
+        <p>&copy; 2023 Топіха Надія </p>
+    </footer>
+</body>
+</html>

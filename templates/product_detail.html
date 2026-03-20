@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+  {% if user.is_authenticated %}
+    <div class="product-detail">
+      <h1>{{ product.name }}</h1>
+      <img class="product-img" src="{{ product.image.url }}" alt="{{ product.name }}">
+      <p>{{ product.description }}</p>
+      <p>Ціна: {{ product.price }} {{ product.currency }}</p>
+      <form method="post" action="{% url 'add_to_cart' product_id=product.id %}">
+        {% csrf_token %}
+        <input type="number" name="quantity" value="1" min="1">
+        <button type="submit">Додати до кошика</button>
+      </form>  
+    </div>
+  {% else %}
+    <h1>Помилка</h1>
+    <p>Доступ обмежений. Будь ласка, увійдіть в систему.</p>
+  {% endif %}
+{% endblock %}

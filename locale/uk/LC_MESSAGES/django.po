@@ -1,0 +1,8 @@
+msgid "Username"
+msgstr "Ім'я користувача"
+
+msgid "Email"
+msgstr "Електронна пошта"
+
+msgid "Password"
+msgstr "Пароль"

@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h2>Результати пошуку для "{{ query }}"</h2>
+
+    {% if products %}
+        <ul>
+            {% for product in products %}
+                <li>
+                    <h3><a href="{% url 'product_detail' pk=product.id %}">{{ product.name }}</a></h3>
+                    <p>Ціна: {{ product.price }} {{ product.currency }}</p>
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>Нічого не знайдено.</p>
+    {% endif %}
+{% endblock %}
